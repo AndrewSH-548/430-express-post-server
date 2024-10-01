@@ -11,10 +11,13 @@ const complainRouter = require('./routes/complain.js');
 
 // put this AFTER we instantiate `app`, and BEFORE our GET and POST routes
 app.use(express.static('client'));
+// put this right after the other `app.use()` call
+app.use(express.json());
 
 // use routes (put this near the bottom, BEFORE app.listen()
 app.use('/quotes', quotesRouter);
 app.use('/api', apiRouter);
+
 app.use('/complain', complainRouter);
 app.use('/', indexRouter);
 
