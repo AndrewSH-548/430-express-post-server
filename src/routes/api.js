@@ -8,6 +8,16 @@ const hoots = [{
   createdAt: new Date(),
 }];
 
+const getHootById = (id) => hoots.find((h) => h.id === id);
+
+const deleteHootById = (id) => {
+  const hoot = getHootById(id);
+  if (!hoot) return null;
+  const index = hoots.indexOf(hoot);
+  hoots.splice(index, 1);
+  return hoot;
+};
+
 const router = express.Router();
 
 router.get('/helloJSON', (req, res) => {
@@ -25,7 +35,7 @@ router.get('/hoots', (req, res) => {
 });
 
 router.post('/addHoot', (req, res) => {
-  //console.log('req.body.content=', req.body.content);
+  // console.log('req.body.content=', req.body.content);
   const content = req.body && req.body.content
     ? req.body.content : 'No req.body or req.body.content found!';
 
@@ -37,6 +47,17 @@ router.post('/addHoot', (req, res) => {
 
   hoots.push(hoot);
   res.status(201).json(hoot);
+});
+
+router.delete('/deleteHoot/:id([0-9,a-z,A-Z,-]{36})', (req, res) => {
+  // res.send('The id you specified for DELETE is ' + req.params.id);
+  const hoot = deleteHootById(req.params.id);
+  if (!hoot) {
+    const error = `id: ${req.params.id} not found`;
+    res.status(404).send({ error });
+  } else {
+    res.json(hoot);
+  }
 });
 
 module.exports = router;

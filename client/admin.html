@@ -75,12 +75,12 @@ const getJsonFetch = async (url, callback) => {
   callback(json);
 };
 
-const postJsonFetch = async (url, payload, callback) => {
+const postJsonFetch = async (url, payload, callback, method='POST') => {
     let json;
     let status;
     try{
         const response = await fetch(url, {
-            method: 'POST',
+            method: method,
             headers: {
                 'Accept': 'application/json',
                 'content-type': 'application/json'
@@ -139,6 +139,17 @@ addHootForm.onsubmit = (evt) => {
     addHootForm['content'].value = '';
     postJsonFetch(newHootURL, payload, addHootCallback('#output-new-hoot'));
 };
+
+/* DELETE Hoot */
+const deleteHootForm = document.querySelector('#form-delete-hoot');
+const deleteHootURL = '/api/deleteHoot';
+deleteHootForm.onsubmit = (evt) => {
+    evt.preventDefault();
+    const id = deleteHootForm['hoot-id'].value.trim();
+    const payload = {};
+    deleteHootForm['hoot-id'].value = '';
+    postJsonFetch(`${deleteHootUrl}/${id}`, payload, addHootCallback('#output-delete-hoot'), 'DELETE');
+}
 
 </script>
 </html>
