@@ -148,7 +148,7 @@ deleteHootForm.onsubmit = (evt) => {
     const id = deleteHootForm['hoot-id'].value.trim();
     const payload = {};
     deleteHootForm['hoot-id'].value = '';
-    postJsonFetch(`${deleteHootUrl}/${id}`, payload, addHootCallback('#output-delete-hoot'), 'DELETE');
+    postJsonFetch(`${deleteHootURL}/${id}`, payload, addHootCallback('#output-delete-hoot'), 'DELETE');
 }
 
 </script>
